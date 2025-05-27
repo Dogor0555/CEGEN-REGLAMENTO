@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CEGEN - Presentación PowerPoint</title>
     <style>
         * {
@@ -19,6 +19,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            padding: 10px;
         }
 
         .powerpoint-container {
@@ -245,6 +246,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            min-width: 100px;
         }
 
         .nav-btn:hover:not(:disabled) {
@@ -325,6 +327,23 @@
             border-radius: 0 10px 10px 0;
         }
 
+        .mobile-nav-toggle {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1001;
+        }
+        
+        .mobile-nav-toggle button {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1.5em;
+        }
+
         @media (max-width: 768px) {
             .slide {
                 padding: 30px 20px;
@@ -340,6 +359,91 @@
             
             .objectives-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                overflow: auto;
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .powerpoint-container {
+                width: 100%;
+                height: auto;
+                min-height: 90vh;
+                border-radius: 10px;
+            }
+            
+            .slide {
+                padding: 20px 15px !important;
+                overflow-y: visible;
+            }
+            
+            h1 {
+                font-size: 1.8em !important;
+                line-height: 1.3;
+            }
+            
+            h2 {
+                font-size: 1.5em !important;
+                margin-bottom: 15px !important;
+            }
+            
+            h3 {
+                font-size: 1.3em !important;
+            }
+            
+            p, li {
+                font-size: 1em !important;
+                line-height: 1.5;
+            }
+            
+            .highlight-box, .organization-chart, .card {
+                padding: 15px !important;
+            }
+            
+            .navigation {
+                width: 95%;
+                bottom: 10px;
+                padding: 8px 10px;
+                display: none;
+                flex-direction: column;
+            }
+            
+            .navigation.show {
+                display: flex;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.9em;
+                min-width: 80px;
+            }
+            
+            .slide-counter {
+                top: 8px;
+                right: 10px;
+                padding: 5px 10px;
+                font-size: 0.8em;
+            }
+            
+            .two-columns, .three-columns {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            
+            .foundation-info {
+                padding: 20px 15px !important;
+            }
+            
+            .thank-you {
+                padding: 20px 0 !important;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
             }
         }
     </style>
@@ -753,6 +857,10 @@
         </div>
     </div>
 
+    <div class="mobile-nav-toggle">
+        <button onclick="toggleMobileNav()">☰ Menú</button>
+    </div>
+
     <div class="navigation">
         <button class="nav-btn" onclick="previousSlide()" id="prevBtn">
             ← Anterior
@@ -784,6 +892,9 @@
             // Update navigation buttons
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Scroll to top of slide
+            slides[currentSlide].scrollTo(0, 0);
         }
 
         function nextSlide() {
@@ -808,6 +919,11 @@
             } else {
                 document.exitFullscreen();
             }
+        }
+        
+        function toggleMobileNav() {
+            const nav = document.querySelector('.navigation');
+            nav.classList.toggle('show');
         }
 
         // Keyboard navigation
@@ -836,26 +952,32 @@
 
         // Touch/swipe support for mobile
         let touchStartX = 0;
+        let touchStartY = 0;
         let touchEndX = 0;
+        let touchEndY = 0;
 
         document.addEventListener('touchstart', function(e) {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         });
 
         document.addEventListener('touchend', function(e) {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipe();
         });
 
         function handleSwipe() {
             const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
             
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide(); // Swipe left - next slide
+            // Solo considerar swipe horizontal si el movimiento vertical es mínimo
+            if (Math.abs(diffY) < 50 && Math.abs(diffX) > swipeThreshold) {
+                if (diffX > 0) {
+                    nextSlide(); // Swipe izquierda - siguiente slide
                 } else {
-                    previousSlide(); // Swipe right - previous slide
+                    previousSlide(); // Swipe derecha - slide anterior
                 }
             }
         }
@@ -922,3 +1044,5 @@
         Total slides: ${totalSlides}
         `);
     </script>
+</body>
+</html>
