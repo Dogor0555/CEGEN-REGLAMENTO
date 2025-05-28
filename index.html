@@ -364,6 +364,72 @@
             animation: pulse 2s infinite;
         }
 
+        /* Estilos para el flujograma */
+        .flowchart-container {
+            width: 100%;
+            overflow: auto;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .flowchart {
+            min-width: 800px;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .flow-step {
+            border: 2px solid #1e3c72;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            background: white;
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .flow-step.decision {
+            background: #e3f2fd;
+            border-color: #2a5298;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .flow-step.start-end {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            border-color: #1e3c72;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: #1e3c72;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .flow-branch {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+        }
+
+        .flow-branch-item {
+            width: 45%;
+            text-align: center;
+        }
+
+        .flow-branch-label {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
         @media (max-width: 768px) {
             .slide {
                 padding: 30px 20px;
@@ -379,6 +445,15 @@
             
             .objectives-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .flowchart-container {
+                padding: 10px;
+            }
+
+            .flow-step {
+                padding: 8px 12px;
+                font-size: 0.9em;
             }
         }
 
@@ -454,13 +529,22 @@
             .nav-btn:not(:disabled) {
                 animation: pulse 3s infinite;
             }
+
+            .flowchart {
+                min-width: 600px;
+            }
+
+            .flow-step {
+                padding: 6px 10px;
+                font-size: 0.8em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="powerpoint-container">
         <div class="slide-counter">
-            <span id="current-slide">1</span> / <span id="total-slides">12</span>
+            <span id="current-slide">1</span> / <span id="total-slides">13</span>
         </div>
 
         <!-- Slide 1: Portada -->
@@ -864,6 +948,108 @@
                 </div>
             </div>
         </div>
+
+        <!-- Slide 13: Flujograma de Actividades -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Flujograma de Actividades del CEGEN</h2>
+            </div>
+
+            <div class="flowchart-container">
+                <div class="flowchart">
+                    <div class="flow-step start-end">Inicio</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">1. Programación de las actividades Académicas</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">2. Reunión de Directiva - Currícula del CEGEN - Programación Propuesta</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step decision">¿Se aprueba?</div>
+                    
+                    <div class="flow-branch">
+                        <div class="flow-branch-item">
+                            <div class="flow-branch-label">No</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-step">Corrección</div>
+                            <div class="flow-arrow">↺</div>
+                        </div>
+                        <div class="flow-branch-item">
+                            <div class="flow-branch-label">Sí</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-step">3. Actividad Programada</div>
+                            <div class="flow-arrow">↓</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-step">4. Difusión - Programación aprobada</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">3.1 Confirmación del Conferencista</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">Solicitud de confirmación - Aceptación del conferencista</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">5. Ambientación</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">6. Desarrollo de la Actividad (Conferencista, Fecha, Hora, Lugar, tema)</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-branch">
+                        <div class="flow-branch-item">
+                            <div class="flow-step decision">¿Requiere publicidad?</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-branch">
+                                <div class="flow-branch-item">
+                                    <div class="flow-branch-label">Sí</div>
+                                    <div class="flow-arrow">↓</div>
+                                    <div class="flow-step">Nota de prensa - Afiche</div>
+                                </div>
+                                <div class="flow-branch-item">
+                                    <div class="flow-branch-label">No</div>
+                                    <div class="flow-arrow">→</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flow-branch-item">
+                            <div class="flow-step decision">¿Requiere logística?</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-branch">
+                                <div class="flow-branch-item">
+                                    <div class="flow-branch-label">Sí</div>
+                                    <div class="flow-arrow">↓</div>
+                                    <div class="flow-step">Lista de requerimientos logísticos - Despacho del requerimiento</div>
+                                </div>
+                                <div class="flow-branch-item">
+                                    <div class="flow-branch-label">No</div>
+                                    <div class="flow-arrow">→</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">Lista de asistencia - Formato de asistencia - Encuesta aleatoria - Fotografías</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">7. Elaboración del informe</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step">8. Presentación del Informe</div>
+                    <div class="flow-arrow">↓</div>
+                    
+                    <div class="flow-step start-end">Fin</div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 20px;">
+                <h3>Proceso Integral</h3>
+                <p>El flujograma muestra el proceso completo de planificación, ejecución y evaluación de las actividades académicas del CEGEN, garantizando un funcionamiento ordenado y eficiente.</p>
+            </div>
+        </div>
     </div>
 
     <!-- Botón de pantalla completa más vistoso -->
@@ -960,51 +1146,53 @@
         let touchEndY = 0;
 
         document.addEventListener('touchstart', function(e) {
-                    touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-    });
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
 
-    document.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        touchEndY = e.changedTouches[0].screenY;
-        handleSwipe();
-    });
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
 
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diffX = touchStartX - touchEndX;
-        const diffY = touchStartY - touchEndY;
-        
-        // Solo considerar swipe horizontal si el movimiento vertical es mínimo
-        if (Math.abs(diffY) < 50 && Math.abs(diffX) > swipeThreshold) {
-            if (diffX > 0) {
-                nextSlide(); // Swipe izquierda - siguiente slide
-            } else {
-                previousSlide(); // Swipe derecha - slide anterior
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            
+            // Solo considerar swipe horizontal si el movimiento vertical es mínimo
+            if (Math.abs(diffY) < 50 && Math.abs(diffX) > swipeThreshold) {
+                if (diffX > 0) {
+                    nextSlide(); // Swipe izquierda - siguiente slide
+                } else {
+                    previousSlide(); // Swipe derecha - slide anterior
+                }
             }
         }
-    }
 
-    // Initialize presentation
-    showSlide(0);
+        // Initialize presentation
+        showSlide(0);
 
-    // Add some helpful console commands for presentation control
-    console.log(`
-    🎯 CEGEN Presentation Controls:
-    ================================
-    ⌨️  Keyboard shortcuts:
-    • Arrow keys or Space: Navigate slides
-    • F11: Toggle fullscreen
-    • Home/End: Go to first/last slide
-    • Escape: Exit fullscreen
-    
-    📱 Touch gestures:
-    • Swipe left/right to navigate
-    
-    🖱️  Functions available:
-    • nextSlide() / previousSlide()
-    • toggleFullscreen()
-    
-    Total slides: ${totalSlides}
-    `);
-</script>
+        // Add some helpful console commands for presentation control
+        console.log(`
+        🎯 CEGEN Presentation Controls:
+        ================================
+        ⌨️  Keyboard shortcuts:
+        • Arrow keys or Space: Navigate slides
+        • F11: Toggle fullscreen
+        • Home/End: Go to first/last slide
+        • Escape: Exit fullscreen
+        
+        📱 Touch gestures:
+        • Swipe left/right to navigate
+        
+        🖱️  Functions available:
+        • nextSlide() / previousSlide()
+        • toggleFullscreen()
+        
+        Total slides: ${totalSlides}
+        `);
+    </script>
+</body>
+</html>
